@@ -1,7 +1,5 @@
-﻿# Projective Transformation
 
-标签（空格分隔）： vision robotics
-
+# Projective Transformation
 ---
 
 ## 一、相机位姿恢复
@@ -26,7 +24,7 @@
 - $z$消影点和$x$消影点
 
 $$r_3=K^{-1}v_z$$$$r_1=K^{-1}v_x$$$$r_2=r_3\times r_1$$
- 
+
 
 ## 投影变换的图形意义以及与灭点的关系
 
@@ -48,13 +46,13 @@ $$r_3=K^{-1}v_z$$$$r_1=K^{-1}v_x$$$$r_2=r_3\times r_1$$
 ## 交比（Cross Ratios）与单视点测量
 ### 交比的定义
 
-       
+
 
 
 1. 交比必须用四个点定义，一般可用双比值定义：$$CR(A,B,C,D)={AC \over AD} : {BC \over BD} $$
 2. 交比在投影变换中保持不变 $${AC \over AD} : {BC \over BD}  = {AC^{’}\over AD^{’}} : {BC^{’} \over BD^{’} }$$ 可使用本性质进行单视点测量，即在点画面中测量距离
 3. 利用交比进行单视点测量无需知道相机的位置以及固有变量（如相机的焦距）
-4. 当一个点在无限远处——即在地平线上，如 $D$在无穷远点，那么有$$CR(A,B,C,D)={AC \over AD} : {BC \over BD}=AC /over BC $$因为$$\lim_{D\to infinity}{AD \over BD} = 1 $$
+4. 当一个点在无限远处——即在地平线上，如 $D$在无穷远点，那么有$$CR(A,B,C,D)={AC \over AD} : {BC \over BD}={AC \over BC} $$因为$$\lim_{D\to infinity}{AD \over BD} = 1 $$
 5. 同样可以通过上式，无需平行线辅助来计算图像坐标系中灭点的位置
 
 **总结：**
@@ -65,10 +63,3 @@ $$r_3=K^{-1}v_z$$$$r_1=K^{-1}v_x$$$$r_2=r_3\times r_1$$
 ## 双视点测量
 
 不需要知道两个物体的相对位姿，测量非常简单的物体
-
-
-
-
-
-
-
