@@ -1,6 +1,5 @@
-﻿# Geometry of Image Formation
+# Geometry of Image Formation
 
-标签（空格分隔）： vision robotics
 
 ---
 
@@ -13,8 +12,11 @@ $${Y\over a}={y\over b}$$
 - 物距越大，像越小（$Y,b$不变，$a$越大$y$越小）
 - 像距越大，像越大（$Y,a$不变，$b$越大$y$越大）
 ## 二、单视角几何
-规律：真实世界里的平行线在成像平面上为灭影线，相交于灭点；反之，成像为平行线，真实世界中为以焦距为灭点的灭影线
-应用：利用真实世界中的平行线测精确距离
+
+
+- 规律：真实世界里的平行线在成像平面上为灭影线，相交于灭点；反之，成像为平行线，真实世界中为以光心为灭点的灭影线
+- 应用：利用真实世界中的平行线测图片上两点的实际距离
+    - 测量地面上两点距离时，可旋转图片使地板上的平行线在图像上也为平行线
 
 ## 三、双透视绘图仪
 两个参数：
@@ -23,11 +25,12 @@ $${Y\over a}={y\over b}$$
 - 相机焦距（相当于改变玻璃板的位置），改变**大小**不改变形状，焦距越大，椭圆越大，焦距越小，椭圆越小
 
 ## 四、Vanishing Point
-真实世界里地平面上所有方向的线指向的灭点汇聚成地平线
-地平线与光心确定的平面永远与成像平面垂直
-应用：
-1.测身高，过脚底的线与地平线交点找到灭点，从该灭点反射一条过头顶的线，两条线在尺子上的交点间距即位身高，相当于人走到尺子旁边会有多高
-2.地平线代表着相机（摄像师）实际高度
+
+- 真实世界里地平面上所有方向的线指向的灭点连成的线称为地平线
+- **地平线永远与光心同高（相对地平面）**
+- 应用：
+    1.测身高，过脚底的线与地平线交点找到灭点，从该灭点反射一条过头顶的线，两条线在尺子上的交点间距即位身高，相当于人走到尺子旁边会有多高
+    2.地平线代表着相机（摄像师）实际高度
 
 ---
 ##五、齐次坐标法
@@ -47,7 +50,7 @@ $$cos\theta={a\over {\sqrt {a^2+b^2} \quad}} $$
 $$\rho={-c\over {\sqrt {a^2+b^2} \quad}} $$
 
 - 直线满足直线方程$$ax+by+cz=0$$
-    则成像平面上的直线方程为$$ax+by+c=0$$
+  则成像平面上的直线方程为$$ax+by+c=0$$
 -  两点成一线：两点向量做外积求出旋转向量即为直线法向量$l=x\times x'$
  两线交点：两线法向量做外积$x=l\times l'$
  
@@ -68,7 +71,7 @@ $$\rho={-c\over {\sqrt {a^2+b^2} \quad}} $$
 x\\y\\0\\
 \end{matrix}\right]=0$
 
-- 法向量为$[a,b,0]$的直线一定过图像原点（注意法向量确定的是直线与原点所在的平面！不是某条直线！）
+- 法向量为$[a,b,0]$的直线一定过图像主点（注意法向量确定的是直线与原点所在的平面！不是某条直线！）
     
     
 ---
@@ -132,6 +135,7 @@ $$M_{cw}=TR_{x,90^\circ}R_{z,180^\circ}$$
 ##七、Pinhole Model
 
 ###相机模型的三个参数：
+
 $$\left[\begin{matrix}x\\1\\\end{matrix}\right]=
 L{KM\left[\begin{matrix}x\\1\\\end{matrix}\right]}$$
 
@@ -142,6 +146,7 @@ L{KM\left[\begin{matrix}x\\1\\\end{matrix}\right]}$$
 针孔模型：在小孔成像模型基础上，将成像平面由针孔后移到针孔前，距离仍为焦距$f$（成像由倒立变为正立）
 ###投影方程：
 $$x'=f{X\over Z}$$
+
 $$y'=f{Y\over Z}$$
 
 - 理解一：除以$Z$是将3D世界收缩到距与相机距离为1的2D平面上，距离越远的点收缩得越厉害；乘$f$是将收缩的2D平面缩放到虚拟成像平面上（与相机距离为$f$且在相机前）
@@ -155,17 +160,22 @@ $$y'=f{Y\over Z}$$
 ###滑动变焦（垂直效应）
 - 相机的两个因素：光心位置和焦距
 - 同时改变两个因素，会营造三维移动的幻觉，例如近处物体远离，远处物体靠近等
+- 物体像的大小变化取决于$f\over Z$，若$f\over Z$变大则图像上物体看起来将变大或者向前移动
+    
+    $$x'={f\over Z}X$$
 
 ---
 ##八、相机投影过程
 ###第一步：物空间到像空间（相机坐标到图像坐标）
-$$Z\left[\begin{matrix}x'\\y'\\1\\\end{matrix}\right]=\left[\begin{matrix}fX_c\\fY_c\\Z_c\\\end{matrix}\right]$$
+$$Z_c\left[\begin{matrix}x'\\y'\\1\\\end{matrix}\right]=\left[\begin{matrix}fX_c\\fY_c\\Z_c\\\end{matrix}\right]$$
 
 - $\left[\begin{matrix}x'\\y'\\1\\\end{matrix}\right]$为像空间齐次坐标（图像坐标），$\left[\begin{matrix}X_c\\Y_c\\Z_c\\\end{matrix}\right]$为物空间坐标（相机坐标）
 
 
-- 图像坐标和相机坐标都用齐次坐标形式：$$Z\left[\begin{matrix}x'\\y'\\1\\\end{matrix}\right]=\left[\begin{matrix}f,0,0,0\\0,f,0,0\\0,0,f,0\\\end{matrix}\right]\left[\begin{matrix}X_c\\Y_c\\Z_c\\1\\\end{matrix}\right]$$
-- 将$Z$移到右边得到相机投影矩阵$P$，则实现相机坐标$X_c$到图像坐标$x$的转换：
+- 图像坐标和相机坐标都用齐次坐标形式：
+
+    $$Z_c\left[\begin{matrix}x\\y\\1\\\end{matrix}\right]=\left[\begin{matrix}f,0,0,0\\0,f,0,0\\0,0,1,0\\\end{matrix}\right]\left[\begin{matrix}X_c\\Y_c\\Z_c\\1\\\end{matrix}\right]$$
+- 将$Z_c$移到右边得到相机投影矩阵$P$，则实现相机坐标$X_c$到图像坐标$x$的转换：
 $$x=PX_c$$
 ###第二步：像空间到像素空间（图像坐标到像素坐标）
 ####像素坐标系：
@@ -190,7 +200,9 @@ $$x=PX_c$$
 
 
 2. 实际公式（考虑各种因素）
-写成矩阵形式：$$\left[\begin{matrix}u\\v\\1\\\end{matrix}\right]=
+写成矩阵形式：
+
+    $$\left[\begin{matrix}u\\v\\1\\\end{matrix}\right]=
 \left[\begin{matrix}\alpha_x,s,P_x\\0,\alpha_y,P_y\\0,0,1\\\end{matrix}\right]
 \left[\begin{matrix}x\\y\\1\\\end{matrix}\right]$$
 
@@ -210,19 +222,26 @@ e=>end
 st->op1->op2->op3->e
 ```
 
-$$Z\left[\begin{matrix}u\\v\\1\\\end{matrix}\right]=
-\left[\begin{matrix}\alpha_x,s,P_x\\0,\alpha_y,P_y\\0,0,1\\\end{matrix}\right]PX_c=\left[\begin{matrix}{\alpha}_x,s,P_x\\0,\alpha_y,P_y\\0,0,1\\\end{matrix}\right]
-\left[\begin{matrix}f,0,0,0\\0,f,0,0\\0,0,f,0\\\end{matrix}\right]
-\left[\begin{matrix}X_c\\Y_c\\Z_c\\1\\\end{matrix}\right]=
-\left[\begin{matrix}{\alpha}_xf,sf,P_x\\0,\alpha_yf,P_y\\0,0,1\\\end{matrix}\right]
-\left[\begin{matrix}I_{3\times3},0\\\end{matrix}\right]
-\left[\begin{matrix}X_c\\Y_c\\Z_c\\1\\\end{matrix}\right]
-=\left[\begin{matrix}f_x,S,P_x\\0,f_y,P_y\\0,0,1\\\end{matrix}\right]
+- 推导：
+
+$$Z_c\left[\begin{matrix}u\\v\\1\\\end{matrix}\right]=
+\left[\begin{matrix}\alpha_x,s,P_x\\0,\alpha_y,P_y\\0,0,1\\\end{matrix}\right]PX_c$$
+
+$$=\left[\begin{matrix}{\alpha}_x,s,P_x\\0,\alpha_y,P_y\\0,0,1\\\end{matrix}\right]
+\left[\begin{matrix}f,0,0,0\\0,f,0,0\\0,0,1,0\\\end{matrix}\right]
+\left[\begin{matrix}X_c\\Y_c\\Z_c\\1\\\end{matrix}\right]$$
+
+$$=\left[\begin{matrix}{\alpha}_xf,sf,P_x\\0,\alpha_yf,P_y\\0,0,1\\\end{matrix}\right]
 \left[\begin{matrix}I_{3\times3},0\\\end{matrix}\right]
 \left[\begin{matrix}X_c\\Y_c\\Z_c\\1\\\end{matrix}\right]$$
 
-记作：
-$$Z\left[\begin{matrix}u\\v\\1\\\end{matrix}\right]=K\left[\begin{matrix}I_{3\times3},0\\\end{matrix}\right]
+$$=\left[\begin{matrix}f_x,S,P_x\\0,f_y,P_y\\0,0,1\\\end{matrix}\right]
+\left[\begin{matrix}I_{3\times3},0\\\end{matrix}\right]
+\left[\begin{matrix}X_c\\Y_c\\Z_c\\1\\\end{matrix}\right]$$
+
+- 记作：
+
+$$Z_c\left[\begin{matrix}u\\v\\1\\\end{matrix}\right]=K\left[\begin{matrix}I_{3\times3},0\\\end{matrix}\right]
 \left[\begin{matrix}X_c\\Y_c\\Z_c\\1\\\end{matrix}\right]$$
 
 - $\left[\begin{matrix}I_{3\times3},0\\\end{matrix}\right]$的作用是实现向量维度变化（四维变三维），保证矩阵乘法正确
@@ -237,24 +256,29 @@ $$Z\left[\begin{matrix}u\\v\\1\\\end{matrix}\right]=K\left[\begin{matrix}I_{3\ti
   多视角几何：世界坐标系作为原始坐标系
 ###多视角几何下相机投影：
 - 第一步：世界坐标->相机坐标
-$$X_c=M_{cw}X_w=
+
+    $$X_c=M_{cw}X_w=
 \left[\begin{matrix}R,t\\0,1\\\end{matrix}\right]
 \left[\begin{matrix}X_w\\Y_w\\Z_w\\1\\\end{matrix}\right]$$
 
-    第二步：相机坐标->图像坐标->像素坐标
+  第二步：相机坐标->图像坐标->像素坐标（与单视角几何投影过程一样）
 
-- 两步合成：$$X_{uv}=K\left[\begin{matrix}R,T\\\end{matrix}\right]X_w$$
+- 两步合成：
+
+    $$Z_cX_{uv}=K\left[\begin{matrix}R,T\\\end{matrix}\right]X_w$$
 
 ###两种特殊情况
 这两种特殊情况起始维度与目标维度相等，称为齐次变换
 
 - 空间中的3D平面
+    
     $$Z_c\left[\begin{matrix}u\\v\\1\\\end{matrix}\right]=HX_w=H\left[\begin{matrix}X_w\\Y_w\\1\\\end{matrix}\right]$$
     - $H$为单应矩阵，描述3D平面到2D平面的转换
-    - 因为空间中是一个平面，可以设世界坐标$z$轴正好与平面法向量重合，则世界坐标中的$Z_w=0$ 
+    - 因为空间中是一个平面，可以设世界坐标$z$轴正好与平面法向量重合，则平面上的点$Z_w=0$ 
 
 - 相机做纯旋转运动
-$$\left[\begin{matrix}u\\v\\1\\\end{matrix}\right]=K[R]\left[\begin{matrix}X_w\\Y_w\\Z_w\\\end{matrix}\right]$$
+
+    $$\left[\begin{matrix}u\\v\\1\\\end{matrix}\right]=K[R]\left[\begin{matrix}X_w\\Y_w\\Z_w\\\end{matrix}\right]$$
     - 纯旋转时 $T=0$，即相机只绕光心旋转
     - 多张图像之间均为纯旋转关系时，可以拼接成一张全景图像
     - 纯旋转无法形成视差，图像中所有物体都相对静止，无法3D重建
@@ -273,19 +297,24 @@ $$\left[\begin{matrix}u\\v\\1\\\end{matrix}\right]=K[R]\left[\begin{matrix}X_w\\
 - 由$A,B$确定出地平线，由地平线相对图像中线的变化可知相机相对地面的位姿
     - 地平线倾斜，相机绕光轴有旋转
     - 地平线上移，相机俯视；地平线下移，相机仰视
-- $\triangle ABC$的垂心为主点
-- $\triangle ABC$与光心$O$连线组成一个四面体
-$$\angle COA=90^\circ ,\angle COB=90^\circ$$
+- $\triangle ABC$的垂心为主点$H$，可确定光心位置
+- $\triangle ABC$与光心$O$连线组成一个四面体，$OH$的长度即位焦距$f$
+
+    $$\angle COA=90^\circ ,\angle COB=90^\circ$$
     
-$$f=d_1d_2-d_3^2$$
-$d_1,d_2,d_3$以像素为单位
+    $$f=d_1d_2-d_3^2$$  
+
+    $d_1,d_2,d_3$以像素为单位
+    
 ###方法二：使用Matlab的标定包进行标定，选多张不同角度的标定板照片，标定的结果：
 
-    - Focal Lenth：$f_c=[3351,3352]$ 
+- Focal Lenth：$f_c=[3351,3352]$ 
 焦距，分别是$x,y$轴向焦距，因为像素不是正方形
-    - Principal Point：$cc=[2015,1511]$      
+- Principal Point：$cc=[2015,1511]$      
 主点，不在图像实际中心，可能因为相机感光芯片安装位置不一定精确，也可能由最优化导致（重投影误差最小）
-    - Skew：$alpha_c=[0.0000]$
+- Skew：$alpha_c=[0.0000]$
 倾斜因子$s$
-    - Distortion：$k_c=[0.070,0.015,-0.023]$
+- Distortion：$k_c=[0.070,0.015,-0.023]$
 径向畸变参数
+
+
